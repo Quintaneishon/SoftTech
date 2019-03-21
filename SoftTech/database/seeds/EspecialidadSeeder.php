@@ -12,6 +12,10 @@ class EspecialidadSeeder extends Seeder
      */ 
     public function run()
     {
+        /* DB::insert('INSERT INTO especialidad (title) VALUES (:title)',[
+            'title' => 'Desarrollador Web'
+        ]); */
+
         DB::table('especialidad')->insert([
             'title' => 'Desarrollador Web'
         ]);
