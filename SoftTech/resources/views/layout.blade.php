@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
 
-    <title>Sticky Footer Navbar Template for Bootstrap</title>
+    <title>SofTech</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
 
@@ -23,16 +23,13 @@
 
     <header>
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">Fixed navbar</a>
+      <nav class="navbar navbar-expand-md navbar-light fixed-top " style="background-color: #A3D4F9;>
+        <a class="navbar-brand" href="#">SofTech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
@@ -42,7 +39,7 @@
           </ul>
           <form class="form-inline mt-2 mt-md-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
           </form>
         </div>
       </nav>
@@ -55,7 +52,7 @@
 
         <footer class="footer">
           <div class="container">
-            <span class="text-muted">Place sticky footer content here.</span>
+            <span class="text-muted">Softech: Ajitzi Quintana, Ted, Alejadro Zepeda, Alexis Garcia</span>
           </div>
         </footer>
 
