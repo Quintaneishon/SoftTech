@@ -20,5 +20,12 @@ class UserSeeder extends Seeder
             'password' => 'laravel',
             'especialidad_id' => $especialidadId,
         ]);
+
+        User::create([
+            'name' => 'Joel',
+            'email' => 'Joel2@gmail.com',
+            'password' => 'laravel',
+            'especialidad_id' => null,
+        ]);
     }
 }

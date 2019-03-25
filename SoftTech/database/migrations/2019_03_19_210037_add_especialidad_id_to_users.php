@@ -15,7 +15,7 @@ class AddEspecialidadIdToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->unsignedInteger('especialidad_id');
+            $table->unsignedInteger('especialidad_id')->nullable();
             $table->foreign('especialidad_id')->references('id')->on('especialidades');
         });
     }
