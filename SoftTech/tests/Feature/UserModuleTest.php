@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserModuleTest extends TestCase
 {
@@ -13,10 +12,12 @@ class UserModuleTest extends TestCase
      *
      * @return void
      */
-    function it_loads_the_user_list_page()
+    function it_create_a_new_user()
     {
-        $response = $this->get('/usuarios');
-
-        $response->assertStatus(200);
+        $this->post('/usuarios/crear',[
+            'name' => 'Prueba',
+            'email' => 'prueba@gmail.com',
+            'password' => '123456'
+        ])->assertSee('Procesando informacion...');
     }
 }

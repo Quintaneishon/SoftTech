@@ -17,14 +17,14 @@ class UserSeeder extends Seeder
         User::create([
             'name' => 'Joel',
             'email' => 'Joel@gmail.com',
-            'password' => 'laravel',
+            'password' => bcrypt(123456),
             'especialidad_id' => $especialidadId,
         ]);
 
         User::create([
             'name' => 'Joel',
             'email' => 'Joel2@gmail.com',
-            'password' => 'laravel',
+            'password' => bcrypt(123456),
             'especialidad_id' => null,
         ]);
     }

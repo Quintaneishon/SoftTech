@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title',"Desarrollador $user->id")
+
 @section('content')
     <h1>Desarrollador #{{$user->id}}</h1>
     <p>Nombre del Desarrollador: {{$user->name}}</p>

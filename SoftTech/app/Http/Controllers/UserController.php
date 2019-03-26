@@ -31,4 +31,28 @@ class UserController extends Controller
             'especialidad' => $especialidad
         ]);
     }
+
+    public function create()
+    {
+        return view('users.create');
+    }
+
+    public function store()
+    {
+        $data=request()->validate([
+            'name' => 'required',
+            'email' => ['required','email','unique:users,email'],
+            'password' => ['required','between:6,14'],
+        ],[
+            'name.required' => 'El campo nombre es obligatorio'
+        ]);
+
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password'])
+        ]);
+
+        return redirect('usuarios');
+    }
 }

@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title','Desarrolladores')
+
 @section('content')
     <h1>{{$title}}</h1>
 

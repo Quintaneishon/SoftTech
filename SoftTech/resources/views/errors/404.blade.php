@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title','404')
+
 @section('content')
 <div id="notfound">
     <div class="notfound">
