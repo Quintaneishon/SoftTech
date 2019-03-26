@@ -9,6 +9,7 @@
     <link rel="icon" href="favicon.ico">
 
     <title>SofTech</title>
+    @section('links')
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">
 
@@ -17,7 +18,8 @@
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-  </head>
+    @show
+</head>
 
   <body>
 

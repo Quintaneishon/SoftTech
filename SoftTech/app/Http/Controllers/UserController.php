@@ -22,7 +22,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
+
         $especialidad = Especialidad::find($user->especialidad_id);
 
         return view('users.show',[
