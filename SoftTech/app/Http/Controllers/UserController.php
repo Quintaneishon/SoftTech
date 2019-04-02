@@ -44,7 +44,12 @@ class UserController extends Controller
             'email' => ['required','email','unique:users,email'],
             'password' => ['required','between:6,14'],
         ],[
-            'name.required' => 'El campo nombre es obligatorio'
+            'name.required' => 'El campo nombre es obligatorio',
+            'email.required' => 'El campo email es obligatorio',
+            'email.email' => 'Tiene que ser un email valido',
+            'email.unique' => 'Ese correo ya esta registrado',
+            'password.required' => 'El campo contraseña es obligatorio',
+            'password.between' =>'la contraseña debe ser entre 6 y 14 caracteres'
         ]);
 
         User::create([

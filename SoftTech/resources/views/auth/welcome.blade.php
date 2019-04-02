@@ -24,16 +24,22 @@
       <img class="mb-4" src="{{asset('images/logo.jpeg')}}" alt="SofTech" width="245" height="51">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" name="email" class="form-control" placeholder="Email address" value="{{old('email')}}" required autofocus>
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" name="password" class="form-control" placeholder="Password" required>
+      @if($message = Session::get('error'))
+         <span class="badge badge-danger">{{$message}}</span>
+     @endif
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button><br>
+      No estas registrado?<br>
+      <a href="{{url("/usuarios/nuevo") }}">Desarrollador</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="#">Cliente</a>
+      <p class="mt-5 mb-3 text-muted">SofTech &reg;</p>
     </form>
   </body>
 </html>

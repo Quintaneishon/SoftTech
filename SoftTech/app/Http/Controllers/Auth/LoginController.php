@@ -14,16 +14,17 @@ class LoginController extends Controller
         return view('auth.welcome');
     }
 
-    public function login(Request $request){
+    public function login(){
+        $data=request();
         $user_data = array(
-            'email'  => $request->get('email'),
-            'password' => $request->get('password')
+            'email'  => $data['email'],
+            'password' => $data['password']
         );
 
         if(Auth::attempt($user_data))
             return redirect('usuarios');
         else
-            return back()->withInput()->with('error', 'Datos de inicio de sesiÃ³n incorrectos.');
+            return back()->withInput()->with('error', 'Datos de inicio de sesion incorrectos.');
 
     }
 }
