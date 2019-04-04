@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Image;
 use App\User;
+use Storage;
 use App\Especialidad;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -37,7 +39,7 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
         $data=request()->validate([
             'name' => 'required',
@@ -51,6 +53,9 @@ class UserController extends Controller
             'password.required' => 'El campo contraseña es obligatorio',
             'password.between' =>'la contraseña debe ser entre 6 y 14 caracteres'
         ]);
+
+        $nombreReal = $request->uploadfile->getClientOriginalName();
+        $request->uploadfile->storeAs('fotukischidas',$nombreReal,"public");
 
         User::create([
             'name' => $data['name'],

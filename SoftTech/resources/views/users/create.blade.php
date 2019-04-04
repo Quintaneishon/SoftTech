@@ -5,7 +5,7 @@
 @section('content')
     <h1>Nuevo Desarrollador</h1>
 
-    <form method="POST" action="{{url('usuarios/crear')}}" >
+    <form method="POST" action="{{url('usuarios/crear')}}" enctype="multipart/form-data" >
         <!--{!! csrf_field() !!}-->
 
         <label for="name">Nombre:</label>
@@ -25,6 +25,9 @@
         @if ($errors->has('password'))
          <span class="badge badge-danger">{{$errors->first('password')}}</span>
         @endif
+        <br>
+        <label for="uploadfile">Foto:</label>
+        <input name="uploadfile" type="file">
         <br>
         <button type="submit">Crear usuario</button>
     </form>
