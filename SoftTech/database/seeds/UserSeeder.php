@@ -19,13 +19,16 @@ class UserSeeder extends Seeder
             'email' => 'Joel@gmail.com',
             'password' => bcrypt(123456),
             'especialidad_id' => $especialidadId,
+            'foto' => null,
+            'descripcion' => 'Soy un desarrollador super responsable y trabajador',
+            'calificacion' => 5
         ]);
 
-        User::create([
-            'name' => 'Joel',
-            'email' => 'Joel2@gmail.com',
-            'password' => bcrypt(123456),
-            'especialidad_id' => null,
-        ]);
+        // User::create([
+        //     'name' => 'Joel',
+        //     'email' => 'Joel2@gmail.com',
+        //     'password' => bcrypt(123456),
+        //     'especialidad_id' => null,
+        // ]);
     }
 }

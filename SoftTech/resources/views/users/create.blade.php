@@ -2,6 +2,14 @@
 
 @section('title', "Nuevo Desarrollador")
 
+@section('scripts')
+    <script>
+        $(document).ready(function(){
+            cargarEspecialidades();
+        });
+    </script>
+@endsection
+
 @section('content')
     <h1>Nuevo Desarrollador</h1>
 
@@ -26,6 +34,15 @@
          <span class="badge badge-danger">{{$errors->first('password')}}</span>
         @endif
         <br>
+        <label for="password">Confirma la constraseña:</label>
+        <input type="password" name="password" >
+        @if ($errors->has('confirmacion'))
+         <span class="badge badge-danger">{{$errors->first('confirmacion')}}</span>
+        @endif
+        <br>
+        <select name="especialidad" id="especialidades">
+
+        </select>
         <label for="uploadfile">Foto:</label>
         <input name="uploadfile" type="file">
         <br>

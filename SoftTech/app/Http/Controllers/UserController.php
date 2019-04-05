@@ -45,13 +45,16 @@ class UserController extends Controller
             'name' => 'required',
             'email' => ['required','email','unique:users,email'],
             'password' => ['required','between:6,14'],
+            'confirmacion' => ['required','same:password'],
         ],[
             'name.required' => 'El campo nombre es obligatorio',
             'email.required' => 'El campo email es obligatorio',
             'email.email' => 'Tiene que ser un email valido',
             'email.unique' => 'Ese correo ya esta registrado',
             'password.required' => 'El campo contraseña es obligatorio',
-            'password.between' =>'la contraseña debe ser entre 6 y 14 caracteres'
+            'password.between' =>'la contraseña debe ser entre 6 y 14 caracteres',
+            'confirmacion.required' => 'El campo confirmacion es obligatorio',
+            'confirmacion.same' => 'Las contraseñas no coinciden'
         ]);
 
         $nombreReal = $request->uploadfile->getClientOriginalName();
@@ -60,9 +63,14 @@ class UserController extends Controller
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password'])
+            'password' => bcrypt($data['password']),
+
         ]);
 
         return redirect('usuarios');
+    }
+
+    public function especialidades(){
+
     }
 }

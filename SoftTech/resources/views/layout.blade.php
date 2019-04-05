@@ -19,6 +19,9 @@
     <!-- Custom styles for this template -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     @show
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{asset('js/scripts.js')}}"></script>
+    @yield('scripts')
 </head>
 
   <body>
