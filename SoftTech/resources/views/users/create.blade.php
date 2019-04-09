@@ -2,13 +2,6 @@
 
 @section('title', "Nuevo Desarrollador")
 
-@section('scripts')
-    <script>
-        $(document).ready(function(){
-            cargarEspecialidades();
-        });
-    </script>
-@endsection
 
 @section('content')
     <h1>Nuevo Desarrollador</h1>
@@ -34,15 +27,26 @@
          <span class="badge badge-danger">{{$errors->first('password')}}</span>
         @endif
         <br>
-        <label for="password">Confirma la constraseña:</label>
-        <input type="password" name="password" >
+        <label for="confirmacion">Confirma la constraseña:</label>
+        <input type="password" name="confirmacion" >
         @if ($errors->has('confirmacion'))
          <span class="badge badge-danger">{{$errors->first('confirmacion')}}</span>
         @endif
         <br>
-        <select name="especialidad" id="especialidades">
-
+        <label for="desc">Descripción: </label>
+        <textarea name="descripcion" rows="10" cols="30" placeholder="Maximo 100 caracteres" value="{{old('descripcion')}}"></textarea>
+        @if ($errors->has('descripcion'))
+         <span class="badge badge-danger">{{$errors->first('descripcion')}}</span>
+        @endif
+        <br>
+        <label for="especialidad">Especialidad: </label>
+        <select name="select">
+            <option disabled selected>Elige una especialidad</option>
+            @foreach($especialidades as $especialidad)
+            <option value="{{$especialidad->id}}">{{$especialidad->title}}</option>
+            @endforeach
         </select>
+        <br>
         <label for="uploadfile">Foto:</label>
         <input name="uploadfile" type="file">
         <br>

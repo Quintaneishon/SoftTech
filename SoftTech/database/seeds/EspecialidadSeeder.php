@@ -33,6 +33,6 @@ class EspecialidadSeeder extends Seeder
             'title' => 'Desarrollador Python',
         ]);
 
-        factory(Especialidad::class,5)->create();
+        //factory(Especialidad::class,5)->create();
     }
 }
