@@ -8,12 +8,15 @@
 
     <form method="POST" action="{{url('usuarios/crear')}}" enctype="multipart/form-data" >
         <!--{!! csrf_field() !!}-->
-
-        <label for="name">Nombre:</label>
-        <input type="text" name="name" value="{{old('name')}}" >
+        <div class="form-group row">
+        <label for="name" class="col-sm-1 col-form-label">Nombre:</label>
+        <div class="col-sm-3">
+        <input type="text" class="form-control form-control-sm" name="name" value="{{old('name')}}" >
         @if ($errors->has('name'))
          <span class="badge badge-danger">{{$errors->first('name')}}</span>
         @endif
+        </div>
+        </div>
         <br>
         <label for="email">Correo electrónico:</label>
         <input type="text" name="email" value="{{old('email')}}">

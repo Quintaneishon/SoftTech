@@ -3,15 +3,15 @@
 @section('title',"Desarrollador $user->id")
 
 @section('content')
-<span class="clearfix"></span>
-<div class="center-block">
-<div class="card mb-3" style="max-width: 540px;">
+<br><br><br>
+<div  style="display: flex;justify-content: center; align-items: center">
+<div class="card mb-3" style="max-width: 640px;">
         <div class="row no-gutters">
           <div class="col-md-4">
             @if ($user->foto == null)
-            <img src="{{asset('images/desarrollador.png')}}" class="card-img" alt="...">
+            <img src="{{asset('images/desarrollador.png')}}" height="100%" width="100%" class="card-img" alt="...">
             @else
-            <img src="/storage/fotukischidas/{{$user->foto}}" class="card-img" alt="...">
+            <img src="/storage/fotukischidas/{{$user->foto}}" height="100%" width="100%"  class="card-img" alt="...">
             @endif
           </div>
           <div class="col-md-8">
