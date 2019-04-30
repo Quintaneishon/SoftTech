@@ -11,7 +11,7 @@
             @if ($user->foto == null)
             <img src="{{asset('images/desarrollador.png')}}" height="100%" width="100%" class="card-img" alt="...">
             @else
-            <img src="{{ Storage::url("app/fotukischidas/"."$user->fotos") }}" height="100%" width="100%"  class="card-img" alt="...">
+            <img src="{{ asset('storage/fotukischidas/'.$user->foto) }}" height="100%" width="100%"  class="card-img" alt="...">
             @endif
           </div>
           <div class="col-md-8">
