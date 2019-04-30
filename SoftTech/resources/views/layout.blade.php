@@ -29,7 +29,7 @@
     <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-light fixed-top " style="background-color: #A3D4F9;">
-        <a class="navbar-brand" href="{{url("/")}}"><img src="{{asset('images/logo.jpeg')}}" width="109px" height="23px"></a>
+        <a class="navbar-brand" href="{{url("/usuarios")}}"><img src="{{asset('images/logoTrans.png')}}" width="109px" height="23px"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

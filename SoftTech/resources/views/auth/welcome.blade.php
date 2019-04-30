@@ -21,7 +21,7 @@
 
   <body class="text-center">
     <form class="form-signin" method="POST" action="{{url('/login')}}">
-      <img class="mb-4" src="{{asset('images/logo.jpeg')}}" alt="SofTech" width="245" height="51">
+      <img class="mb-4" src="{{asset('images/logoTrans.png')}}" alt="SofTech" width="245" height="51">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
       <label for="inputEmail" class="sr-only">Email address</label>
       <input type="email" name="email" class="form-control" placeholder="Email address" value="{{old('email')}}" required autofocus>
