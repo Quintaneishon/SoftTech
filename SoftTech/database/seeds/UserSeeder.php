@@ -15,12 +15,24 @@ class UserSeeder extends Seeder
     {
         $especialidadId = Especialidad::where('title','Desarrollador Web')->value('id');
         User::create([
+            'tipo'=> 'desarrollador',
             'name' => 'Joel',
             'email' => 'Joel@gmail.com',
             'password' => bcrypt(123456),
             'especialidad_id' => $especialidadId,
             'foto' => null,
             'descripcion' => 'Soy un desarrollador super responsable y trabajador',
+            'calificacion' => 5
+        ]);
+
+        User::create([
+            'tipo'=> 'cliente',
+            'name' => 'Joelo',
+            'email' => 'Joelo@gmail.com',
+            'password' => bcrypt(123456),
+            'especialidad_id' => null,
+            'foto' => null,
+            'descripcion' => null,
             'calificacion' => 5
         ]);
 

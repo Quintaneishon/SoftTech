@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Cliente;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,5 +27,15 @@ class LoginController extends Controller
         else
             return back()->withInput()->with('error', 'Datos de inicio de sesion incorrectos.');
 
+    }
+
+    public function logout(){
+        try{
+            Auth::logout();
+            return redirect('/');
+        }
+        catch(Throwable $e){
+            ;
+        }
     }
 }
