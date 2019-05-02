@@ -24,7 +24,7 @@
     @yield('scripts')
 </head>
 
-  <body>
+  <body class="bg-light">
 
     <header>
       <!-- Fixed navbar -->
