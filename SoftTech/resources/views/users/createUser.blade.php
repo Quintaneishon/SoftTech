@@ -4,9 +4,11 @@
 
 
 @section('content')
-<div class="centrar" style="position :relative !important; left:25% !important; padding-bottom:20px;">
-    <h1 style="padding-left:10%;">Nuevo Desarrollador</h1>
-    <div class="my-10 p-3 bg-white rounded shadow-sm w-50">    
+<!-- <div class="centrar" style="position :relative !important; left:25% !important; padding-bottom:20px;"> -->
+<br>
+<div class="row"> 
+    <div class="my-10 p-3 bg-white rounded shadow-sm" style="width:500px;">
+    <h1 style="padding-left:15%; padding-bottom:10%">Nuevo Desarrollador</h1>    
         <form method="POST" action="{{url('usuarios/crearDesarrollador')}}" enctype="multipart/form-data" >
             <!--{!! csrf_field() !!}-->
             <div class="form-group">
@@ -58,10 +60,47 @@
                     <input name="uploadfile" class="form-control-file" type="file">
             </div>
             
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Crear usuario</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Crear Desarrollador</button>
+            
+        </form>
+    </div>
+    <div class="p-3 bg-white shadow-sm ml-auto" style="width:500px;height:530px;">
+    <h1 style="padding-left:25%; padding-bottom:10%">Nuevo Cliente</h1>    
+        <form method="POST" action="{{url('usuarios/crearCliente')}}" enctype="multipart/form-data" >
+            <!--{!! csrf_field() !!}-->
+            <div class="form-group">
+                <label for="name2" class="col-form-label">Nombre:</label>
+                    <input type="text" class="form-control form-control-sm" name="name2" value="{{old('name')}}" >
+                    @if ($errors->has('name2'))
+                    <span class="badge badge-danger">{{$errors->first('name2')}}</span>
+                    @endif
+            </div>
+            <div class="form-group">
+                <label for="email2" class="col-form-label">Correo electrónico:</label>
+                    <input type="text" class="form-control form-control-sm" name="email2" value="{{old('email')}}">
+                    @if ($errors->has('email2'))
+                    <span class="badge badge-danger">{{$errors->first('email2')}}</span>
+                    @endif
+            </div>
+            <div class="form-group">
+                <label for="password2" class="col-form-label">Constraseña:</label>
+                    <input type="password" class="form-control form-control-sm" name="password2" >
+                    @if ($errors->has('password2'))
+                    <span class="badge badge-danger">{{$errors->first('password2')}}</span>
+                    @endif
+            </div>
+            <div class="form-group">
+                <label for="confirmacion2" class="col-form-label">Confirma la constraseña:</label>
+                    <input type="password" name="confirmacion2" class="form-control form-control-sm">
+                    @if ($errors->has('confirmacion2'))
+                    <span class="badge badge-danger">{{$errors->first('confirmacion2')}}</span>
+                    @endif
+            </div>            
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Crear Cliente</button>
             
         </form>
     </div>
 </div>
+<br>
 @endsection
 
