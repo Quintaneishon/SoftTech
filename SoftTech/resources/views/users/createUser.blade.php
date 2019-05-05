@@ -8,7 +8,7 @@
 <br>
 <div class="row"> 
     <div class="my-10 p-3 bg-white rounded shadow-sm" style="width:500px;">
-    <h1 style="padding-left:15%; padding-bottom:10%">Nuevo Desarrollador</h1>    
+    <h1 style="padding-left:10%; padding-bottom:10%">¿Eres Desarrollador?</h1>    
         <form method="POST" action="{{url('usuarios/crearDesarrollador')}}" enctype="multipart/form-data" >
             <!--{!! csrf_field() !!}-->
             <div class="form-group">
@@ -64,8 +64,8 @@
             
         </form>
     </div>
-    <div class="p-3 bg-white shadow-sm ml-auto" style="width:500px;height:530px;">
-    <h1 style="padding-left:25%; padding-bottom:10%">Nuevo Cliente</h1>    
+    <div class="p-3 bg-white shadow-sm ml-auto" style="width:500px;height:570px;">
+    <h1 style="padding-left:10%; padding-bottom:10%">¿Necesitas que desarrrollen una idea?</h1>    
         <form method="POST" action="{{url('usuarios/crearCliente')}}" enctype="multipart/form-data" >
             <!--{!! csrf_field() !!}-->
             <div class="form-group">

@@ -124,4 +124,15 @@ class UserController extends Controller
         }
     }
 
+    public function dashboard($id)
+    {
+        $user = User::findOrFail($id);
+        $especialidad = Especialidad::find($user->especialidad_id);
+
+        return view('users.dashboard',[
+            'user' => $user,
+            'especialidad' => $especialidad
+        ]);
+    }
+
 }

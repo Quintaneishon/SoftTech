@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\Cliente;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -22,8 +21,14 @@ class LoginController extends Controller
             'password' => $data['password']
         );
 
-        if(Auth::attempt($user_data))
-            return redirect('usuarios');
+        if(Auth::attempt($user_data)){
+            $tipo=User::where('email',$user_data['email'])->value('tipo');
+            $id=User::where('email',$user_data['email'])->value('id');
+            if($tipo=='cliente')
+                return redirect('usuarios');
+            else
+                return redirect('desarrollador/'.$id);
+        }
         else
             return back()->withInput()->with('error', 'Datos de inicio de sesion incorrectos.');
 

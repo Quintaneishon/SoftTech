@@ -18,6 +18,9 @@
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+    <!--icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     @show
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{asset('js/scripts.js')}}"></script>
@@ -25,8 +28,6 @@
 </head>
 
   <body class="bg-light">
-
-    <header>
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-light fixed-top " style="background-color: #A3D4F9;">
         <a class="navbar-brand" href="{{url("/usuarios")}}"><img src="{{asset('images/logoTrans.png')}}" width="109px" height="23px"></a>
@@ -43,9 +44,18 @@
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
           </form>
+          <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:10px;">
+            <i class="fas fa-bars"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <a class="dropdown-item" href="/logout">Log Out</a>
+            <a class="dropdown-item" href="#">Ayuda</a>
+            </div>
+            </div>
         </div>
       </nav>
-    </header>
+    @yield('dashboard')
 
     <!-- Begin page content -->
     <main role="main" class="container">

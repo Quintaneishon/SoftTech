@@ -15,3 +15,5 @@ Route::post('/usuarios/crearCliente', 'UserController@storeCliente');
 Route::post('/login','Auth\LoginController@login');
 
 Route::get('/logout','Auth\LoginController@logout');
+
+Route::get('/desarrollador/{id}','UserController@dashboard')->middleware('auth')->where('id','[0-9]+');
