@@ -55,7 +55,7 @@
             <a class="dropdown-item" href="/logout">Log Out</a>
             <a class="dropdown-item" href="#">Ayuda</a>
             </div>
-            </div>
+          </div>
         </div>
       </nav>
     @yield('dashboard')

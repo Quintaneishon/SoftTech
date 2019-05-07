@@ -34,7 +34,11 @@
 
 @section('content')
 <div class="d-flex align-items-center p-3 my-0 text-white-50 bg-info rounded shadow-sm">
+    @if ($user->foto != null)
     <img class="mr-3" src="{{ asset('storage/fotukischidas/'.$user->foto) }}" alt="" width="70" height="70">
+    @else
+    <img src="{{asset('images/desarrollador.png')}}" height="70" width="70" class="mr-3" alt="...">
+    @endif
     <div class="lh-100">
       <h2 class="mb-0 text-white lh-100">Bienvenido {{$user->name}}</h2>
       <small>{{$especialidad->title}}</small>
