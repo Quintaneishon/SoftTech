@@ -19,7 +19,7 @@
         </div>
         <div class="dropdown">
             <a class="nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell" id="bell"></i>
+            <i class="fa fa-bell faa-ring animated" id="bell"></i>
             <span class="badge badge-pill bg-light align-text-bottom">30</span>
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -41,24 +41,4 @@
     </div>
 </div>
 
-@endsection
-
-@section ('links')
-@parent
-<style>
-@keyframes rotate {from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}}
-@-webkit-keyframes rotate {from {-webkit-transform: rotate(0deg);}
-  to {-webkit-transform: rotate(360deg);}}
-#bell{
-    -webkit-animation: 3s rotate linear infinite;
-    animation: 3s rotate linear infinite;
-    -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;
-}
- {
-     -webkit-animation-direction: reverse;
-     animation-direction: reverse;
-}
-</style>
 @endsection
