@@ -6,6 +6,12 @@
 <br><br><br>
 <div  style="display: flex;justify-content: center; align-items: center">
 <div class="card mb-3" style="max-width: 640px;">
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+</div>
+@endif
         <div class="row no-gutters">
           <div class="col-md-4">
             @if ($user->foto == null)
@@ -29,11 +35,35 @@
                     <p class="card-text"><strong>Descripcion: </strong>{{$user->descripcion}}</p>
                     @endif
                 <p class="card-text"><strong>Calificacion: </strong>{{$user->calificacion}} <span class="fa fa-star checked"></span></p>
-                <a href="#" class="btn btn-primary">Proponer Trato</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Proponer Trato</a>
             </div>
           </div>
         </div>
       </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Escribe una rápida descripción de tu proyecto para que al desarrollador le interese</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('usuarios/crearTrato')}}" >
+      <div class="modal-body">
+          <div class="form-group">
+            <textarea name="resumen" class="form-control" rows="5" cols="30"></textarea>
+          </div>
+          <input type="hidden" id="desarrolladorID" name="desarrolladorID" value="{{$user->id}}">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
 </div>
 @endsection
 

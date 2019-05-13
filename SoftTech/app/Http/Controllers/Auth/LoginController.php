@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Session;
 
 class LoginController extends Controller
 {
@@ -24,6 +25,7 @@ class LoginController extends Controller
         if(Auth::attempt($user_data)){
             $tipo=User::where('email',$user_data['email'])->value('tipo');
             $id=User::where('email',$user_data['email'])->value('id');
+            Session::put('login', $id);
             if($tipo=='cliente')
                 return redirect('usuarios');
             else

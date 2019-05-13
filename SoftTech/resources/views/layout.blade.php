@@ -64,7 +64,7 @@
     <main role="main" class="container">
         @yield('content')
         </main>
-
+        <br>
         <footer class="footer">
           <div class="container">
             <span class="text-muted">Softech: Ajitzi Quintana, Ted, Alejadro Zepeda, Alexis Garcia</span>

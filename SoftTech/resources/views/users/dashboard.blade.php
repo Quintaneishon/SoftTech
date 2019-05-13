@@ -19,14 +19,24 @@
         </div>
         <div class="dropdown">
             <a class="nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @if(sizeof($peticion)==0)
+            <i class="fa fa-bell" id="bell"></i>
+            @else
             <i class="fa fa-bell faa-ring animated" id="bell"></i>
-            <span class="badge badge-pill bg-light align-text-bottom">30</span>
+            @endif
+            <span class="badge badge-pill bg-light align-text-bottom">{{sizeof($peticion)}}</span>
             </a>
+            @if(sizeof($peticion)!=0)
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                @foreach($peticion as $peti)
+                <div class="dropdown-item">
+                  {{$peti->resumen}}<br>
+                  <button type="button" class="btn btn-sm btn-secondary" href="#">Aceptar</button>
+                  <button type="button" class="btn btn-sm btn-secondary" href="#">Rechazar</button>
+                </div>
+                @endforeach
             </div>
+            @endif
         </div>
   </nav>
 </div>
@@ -44,5 +54,18 @@
       <small>{{$especialidad->title}}</small>
     </div>
 </div>
+
+<div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Proyecto 1</h6>
+    <div class="media text-muted pt-3">
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <small class="d-block text-right mt-3">
+      <a href="#">All updates</a>
+    </small>
+  </div>
 
 @endsection
