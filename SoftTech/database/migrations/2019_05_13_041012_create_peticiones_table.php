@@ -18,8 +18,8 @@ class CreatePeticionesTable extends Migration
             $table->unsignedInteger('desarrollador_id');
             $table->unsignedInteger('cliente_id');
             $table->text('resumen');
-            $table->boolean('constestado')->default(false);
-            $table->boolean('aceptado')->default(false);
+            $table->char('contestado')->default('N');
+            $table->char('aceptado')->default('N');
             $table->timestamps();
         });
     }

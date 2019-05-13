@@ -16,6 +16,10 @@ Route::post('/login','Auth\LoginController@login');
 
 Route::get('/logout','Auth\LoginController@logout');
 
-Route::get('/desarrollador/{id}','UserController@dashboard')->middleware('auth')->where('id','[0-9]+');
+Route::get('/desarrollador/{id}','UserController@dashboardDesarrollador')->middleware('auth')->where('id','[0-9]+');
 
 Route::post('/usuarios/crearTrato', 'UserController@crearTrato');
+
+Route::get('/usuarios/contestar/{opcion}/{id}','UserController@contestar')->name('contestar')->middleware('auth');
+
+Route::get('/cliente/{id}','UserController@dashboardCliente')->middleware('auth')->where('id','[0-9]+');

@@ -31,6 +31,7 @@
 </head>
 
   <body class="bg-light">
+      @section('navbar')
       <!-- Fixed navbar -->
       <nav class="navbar navbar-expand-md navbar-light fixed-top " style="background-color: #A3D4F9;">
         <a class="navbar-brand" href="{{url("/usuarios")}}"><img src="{{asset('images/logoTrans.png')}}" width="109px" height="23px"></a>
@@ -58,7 +59,7 @@
           </div>
         </div>
       </nav>
-    @yield('dashboard')
+    @show
 
     <!-- Begin page content -->
     <main role="main" class="container">

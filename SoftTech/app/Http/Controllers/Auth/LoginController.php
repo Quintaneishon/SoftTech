@@ -27,7 +27,7 @@ class LoginController extends Controller
             $id=User::where('email',$user_data['email'])->value('id');
             Session::put('login', $id);
             if($tipo=='cliente')
-                return redirect('usuarios');
+                return redirect('cliente/'.$id);
             else
                 return redirect('desarrollador/'.$id);
         }

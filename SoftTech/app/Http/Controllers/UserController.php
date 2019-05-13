@@ -127,15 +127,24 @@ class UserController extends Controller
         }
     }
 
-    public function dashboard($id)
+    public function dashboardDesarrollador($id)
     {
         $user = User::findOrFail($id);
         $especialidad = Especialidad::find($user->especialidad_id);
-        $peticion = Peticion::where('desarrollador_id',$id)->get();
-
-        return view('users.dashboard',[
+        $peticion = Peticion::where('desarrollador_id',$id)->where('contestado','N')->get();
+        return view('users.dashboardDesarrollador',[
             'user' => $user,
             'especialidad' => $especialidad,
+            'peticion' => $peticion,
+        ]);
+    }
+
+    public function dashboardCliente($id)
+    {
+        $user = User::findOrFail($id);
+        $peticion = Peticion::where('cliente_id',$id)->where('contestado','S')->get();
+        return view('users.dashboardCliente',[
+            'user' => $user,
             'peticion' => $peticion,
         ]);
     }
@@ -150,6 +159,17 @@ class UserController extends Controller
         ]);
         return back()->with('success','Resumen enviado correctamente!');
         // return $cliente.' '.$request['desarrolladorID'];
+    }
+
+    public function contestar($respuesta,$id){
+        $peticion=Peticion::find($id);
+        $peticion->contestado='S';
+
+        if($respuesta=='aceptar')
+            $peticion->aceptado='S';
+
+        $peticion->save();
+        return back();
     }
 
 }

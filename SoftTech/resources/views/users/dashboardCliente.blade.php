@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title',"Desarrollador $user->id")
-
-@section('dashboard')
-<div class="nav-scroller bg-white shadow-sm" style="margin-top: 57px;">
+@section('title',"Cliente $user->id")
+@section('navbar')
+@parent
+<div class="nav-scroller bg-white shadow-sm " style="margin-top:57px;">
       <nav class="nav nav-underline">
         <a class="nav-link active" href="#">Dashboard</a>
         <div class="dropdown">
@@ -29,10 +29,15 @@
             @if(sizeof($peticion)!=0)
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($peticion as $peti)
-                <div class="dropdown-item">
-                  {{$peti->resumen}}<br>
-                  <button type="button" class="btn btn-sm btn-secondary" href="#">Aceptar</button>
-                  <button type="button" class="btn btn-sm btn-secondary" href="#">Rechazar</button>
+                <div class="dropdown-item border">
+                  @if($peti->aceptado == 'S')
+                    El desarrollador aceptó tu proyecto:<br><b>{{$peti->resumen}}</b><br> comunicate con el para más detalles <br> 
+                  <a class="badge badge-secondary" href="#">IR</a>
+                  <a class="badge badge-secondary" href="#">OK</a>
+                  @else
+                    El desarrollador rechazo tu proyecto:<br><b>{{$peti->resumen}}</b><br>puedes intentar buscando otro desarrollador<br> 
+                  <a class="badge badge-secondary" href="#">OK</a>
+                  @endif
                 </div>
                 @endforeach
             </div>
@@ -44,14 +49,8 @@
 
 @section('content')
 <div class="d-flex align-items-center p-3 my-0 text-white-50 bg-info rounded shadow-sm">
-    @if ($user->foto != null)
-    <img class="mr-3" src="{{ asset('storage/fotukischidas/'.$user->foto) }}" alt="" width="70" height="70">
-    @else
-    <img src="{{asset('images/desarrollador.png')}}" height="70" width="70" class="mr-3" alt="...">
-    @endif
     <div class="lh-100">
       <h2 class="mb-0 text-white lh-100">Bienvenido {{$user->name}}</h2>
-      <small>{{$especialidad->title}}</small>
     </div>
 </div>
 
