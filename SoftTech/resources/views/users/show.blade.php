@@ -53,8 +53,13 @@
       </div>
       <form method="POST" action="{{url('usuarios/crearTrato')}}" >
       <div class="modal-body">
+          <h6>Nombre de tu proyecto</h6>
           <div class="form-group">
-            <textarea name="resumen" class="form-control" rows="5" cols="30"></textarea>
+            <input type="text" class="form-control" id="titleProyect" name="titleProyect">
+          </div>
+          <h6>Resumen</h6>
+          <div class="form-group">
+            <textarea name="resumen" class="form-control" rows="5" cols="30" ></textarea>
           </div>
           <input type="hidden" id="desarrolladorID" name="desarrolladorID" value="{{$user->id}}">
       </div>

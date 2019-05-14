@@ -15,6 +15,7 @@ class CreatePeticionesTable extends Migration
     {
         Schema::create('peticiones', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->unsignedInteger('desarrollador_id');
             $table->unsignedInteger('cliente_id');
             $table->text('resumen');

@@ -22,4 +22,6 @@ Route::post('/usuarios/crearTrato', 'UserController@crearTrato');
 
 Route::get('/usuarios/contestar/{opcion}/{id}','UserController@contestar')->name('contestar')->middleware('auth');
 
-Route::get('/cliente/{id}','UserController@dashboardCliente')->middleware('auth')->where('id','[0-9]+');
+Route::get('/cliente/{id}','UserController@dashboardCliente')->name('dashboard')->middleware('auth')->where('id','[0-9]+');
+
+Route::get('/usuarios/eliminar/{id}','UserController@eliminarPeticion')->name('eliminar')->middleware('auth');

@@ -2,8 +2,9 @@
 
 @section('title',"Desarrollador $user->id")
 @section('navbar')
-<div class="nav-scroller bg-white shadow-sm fixed-top">
+<div class="nav-scroller fixed-top " style="background-color:#D0D6DA;">
       <nav class="nav nav-underline">
+        <a class="navbar-brand" href="{{url("/usuarios")}}"><img src="{{asset('images/logoTrans.png')}}" width="109px" height="23px"></a>
         <a class="nav-link active" href="#">Dashboard</a>
         <div class="dropdown">
             <a class="nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,18 +28,19 @@
             </a>
             @if(sizeof($peticion)!=0)
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @foreach($peticion as $peti)
+                @for($i=sizeof($peticion)-1;$i>=0;$i--)
                 <div class="dropdown-item border">
-                  {{$peti->resumen}}<br>
-                  <a class="badge badge-secondary" href="{{route('contestar',['opcion'=>'aceptar','id'=>$peti->id])}}">Aceptar</a>
-                  <a class="badge badge-secondary" href="{{route('contestar',['opcion'=>'rechazar','id'=>$peti->id])}}">Rechazar</a>
+                  <b>{{$peticion[$i]->name}}</b><br>
+                  {{$peticion[$i]->resumen}}<br>
+                  <a class="badge badge-success" href="{{route('contestar',['opcion'=>'aceptar','id'=>$peticion[$i]->id])}}">Aceptar</a>
+                  <a class="badge badge-danger" href="{{route('contestar',['opcion'=>'rechazar','id'=>$peticion[$i]->id])}}">Rechazar</a>
                 </div>
-                @endforeach
+                @endfor
             </div>
             @endif
         </div>
         <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:980px;">
+            <button id="btnGroupDrop1" type="button" class="btn btn-outline-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:1500%;">
             <i class="fas fa-bars"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">

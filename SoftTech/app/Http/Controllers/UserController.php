@@ -92,7 +92,7 @@ class UserController extends Controller
             'name2' => 'required',
             'email2' => ['required','email','unique:users,email'],
             'password2' => ['required','between:6,14'],
-            'confirmacion2' => ['required','same:password'],
+            'confirmacion2' => ['required','same:password2'],
         ],[
             'name2.required' => 'El campo nombre es obligatorio',
             'email2.required' => 'El campo email es obligatorio',
@@ -105,10 +105,10 @@ class UserController extends Controller
         ]);
 
         User::create([
-            'name' => $data['name'],
+            'name' => $data['name2'],
             'tipo' => 'cliente',
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'email' => $data['email2'],
+            'password' => bcrypt($data['password2']),
             'foto' => null,
             'descripcion' => null,
             'especialidad_id' => null,
@@ -156,6 +156,7 @@ class UserController extends Controller
             'desarrollador_id' => $request['desarrolladorID'],
             'cliente_id' => $cliente,
             'resumen' => $request['resumen'],
+            'name' => $request['titleProyect']
         ]);
         return back()->with('success','Resumen enviado correctamente!');
         // return $cliente.' '.$request['desarrolladorID'];
@@ -169,6 +170,12 @@ class UserController extends Controller
             $peticion->aceptado='S';
 
         $peticion->save();
+        return back();
+    }
+
+    public function eliminarPeticion($id){
+        $peticion=Peticion::find($id);
+        $peticion->delete();
         return back();
     }
 

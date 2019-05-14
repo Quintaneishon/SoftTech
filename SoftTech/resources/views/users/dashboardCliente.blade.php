@@ -5,7 +5,7 @@
 @parent
 <div class="nav-scroller bg-white shadow-sm " style="margin-top:57px;">
       <nav class="nav nav-underline">
-        <a class="nav-link active" href="#">Dashboard</a>
+        <a class="nav-link disabled" href="#">Dashboard</a>
         <div class="dropdown">
             <a class="nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Proyectos
@@ -28,18 +28,18 @@
             </a>
             @if(sizeof($peticion)!=0)
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                @foreach($peticion as $peti)
+                @for($i=sizeof($peticion)-1; $i>=0; $i--)
                 <div class="dropdown-item border">
-                  @if($peti->aceptado == 'S')
-                    El desarrollador aceptó tu proyecto:<br><b>{{$peti->resumen}}</b><br> comunicate con el para más detalles <br> 
-                  <a class="badge badge-secondary" href="#">IR</a>
-                  <a class="badge badge-secondary" href="#">OK</a>
+                  @if($peticion[$i]->aceptado == 'S')
+                    El desarrollador aceptó tu proyecto:<br><b>{{$peticion[$i]->name}}</b><br> comunicate con el para más detalles <br> 
+                  <a class="badge badge-success" href="#">GO</a>
+                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">OK</a>
                   @else
-                    El desarrollador rechazo tu proyecto:<br><b>{{$peti->resumen}}</b><br>puedes intentar buscando otro desarrollador<br> 
-                  <a class="badge badge-secondary" href="#">OK</a>
+                    El desarrollador rechazo tu proyecto:<br><b>{{$peticion[$i]->name}}</b><br>puedes intentar buscando otro desarrollador<br> 
+                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">OK</a>
                   @endif
                 </div>
-                @endforeach
+                @endfor
             </div>
             @endif
         </div>
