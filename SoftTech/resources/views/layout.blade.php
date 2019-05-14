@@ -33,18 +33,20 @@
   <body class="bg-light">
       @section('navbar')
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-color:#B5C3CD;">
+      <nav class="navbar navbar-expand-md navbar-light fixed-top" style="background-image:url('{{asset('images/programador.png')}}');background-repeat:no-repeat;background-size:100%;" >
         <a class="navbar-brand" href="{{url("/usuarios")}}"><img src="{{asset('images/logoTrans.png')}}" width="109px" height="23px"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <ul class="navbar-nav mr-auto">
-          <a class="nav-link" href="{{route('dashboard',$user->id)}}">Dashboard</a>
-            <li class="nav-item">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{route('dashboard',$user->id)}}">Dashboard</a>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href="{{url("/usuarios")}}">Desarrolladores</a>
-            </li>
-          </ul>
+          </li>
+        </ul>  
           <form class="form-inline mt-2 mt-md-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
