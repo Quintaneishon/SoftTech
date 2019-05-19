@@ -7,6 +7,8 @@ use App\User;
 use Storage;
 use App\Especialidad;
 use App\Peticion;
+use App\Project;
+use App\ProjectMessages;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Session;
@@ -132,10 +134,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $especialidad = Especialidad::find($user->especialidad_id);
         $peticion = Peticion::where('desarrollador_id',$id)->where('contestado','N')->get();
+        $project = Project::where('desarrollador_id',$id)->get();
+        $mensajes = ProjectMessages::all();
         return view('users.dashboardDesarrollador',[
             'user' => $user,
             'especialidad' => $especialidad,
             'peticion' => $peticion,
+            'project' => $project,
+            'mensajes' => $mensajes
         ]);
     }
 
@@ -143,9 +149,13 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $peticion = Peticion::where('cliente_id',$id)->where('contestado','S')->get();
+        $project = Project::where('cliente_id',$id)->get();
+        $mensajes = ProjectMessages::all();
         return view('users.dashboardCliente',[
             'user' => $user,
             'peticion' => $peticion,
+            'project' => $project,
+            'mensajes' => $mensajes
         ]);
     }
 
@@ -166,8 +176,14 @@ class UserController extends Controller
         $peticion=Peticion::find($id);
         $peticion->contestado='S';
 
-        if($respuesta=='aceptar')
+        if($respuesta=='aceptar'){
             $peticion->aceptado='S';
+            Project::create([
+                'desarrollador_id'=>$peticion->desarrollador_id,
+                'cliente_id'=>$peticion->cliente_id,
+                'name'=>$peticion->name
+            ]);
+        }
 
         $peticion->save();
         return back();

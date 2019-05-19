@@ -66,7 +66,7 @@
     </div>
     <div class="p-3 bg-white shadow-sm ml-auto" style="width:500px;height:570px;">
     <h1 style="padding-left:10%; padding-bottom:10%">¿Necesitas que desarrrollen una idea?</h1>    
-        <form method="POST" action="{{url('usuarios/crearCliente')}}" enctype="multipart/form-data" >
+        <form method="POST" action="{{url('usuarios/crearCliente')}}" >
             <!--{!! csrf_field() !!}-->
             <div class="form-group">
                 <label for="name2" class="col-form-label">Nombre:</label>

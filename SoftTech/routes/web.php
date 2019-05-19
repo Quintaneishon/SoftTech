@@ -25,3 +25,5 @@ Route::get('/usuarios/contestar/{opcion}/{id}','UserController@contestar')->name
 Route::get('/cliente/{id}','UserController@dashboardCliente')->name('dashboard')->middleware('auth')->where('id','[0-9]+');
 
 Route::get('/usuarios/eliminar/{id}','UserController@eliminarPeticion')->name('eliminar')->middleware('auth');
+
+Route::post('/sendMessage','ProjectController@sendMessage');
