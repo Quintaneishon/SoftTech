@@ -68,7 +68,7 @@
 </div>
 
 @for($i=sizeof($project)-1;$i>=0;$i--)
-<div class="my-3 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
+<div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
     <h5 class="border-bottom border-gray pb-2 mb-0"><b>{{$project[$i]->name}}</b></h5>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -76,9 +76,9 @@
             @foreach($mensajes as $mensaje)
               @if($mensaje->project_id == $project[$i]->id)
               @if($mensaje->remitente == $user->id)
-                  <p class="badge badge-secondary" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;">{{$mensaje->mensaje}}</p>
+                  <p class="badge badge-warning" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
                 @else
-                  <p class="badge badge-secondary" style="float:left;margin-left:10px;clear:both;padding:10px;font-size:small;" >{{$mensaje->mensaje}}</p>
+                <p class="badge badge-warning" style="float:left;margin-left:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
                 @endif
               @endif
             @endforeach
@@ -92,7 +92,7 @@
       <input id="remitente" name="remitente" type="hidden" value="{{$project[$i]->desarrollador_id}}">
       <input id="destinatario" name="destinatario" type="hidden" value="{{$project[$i]->cliente_id}}">
       <div class="input-group-append">
-        <button class="btn btn-outline-success" type="submit" id="enviarMensaje">Enviar</button>
+        <button class="btn btn-success" type="submit" id="enviarMensaje">Enviar</button>
       </div>
     </form>
     </div>
