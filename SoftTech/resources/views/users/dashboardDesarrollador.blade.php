@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title',"Desarrollador $user->id")
+@section('title',"Desarrollador $user->name")
 @section('navbar')
 <div class="nav-scroller fixed-top " style="background-color:#D0D6DA;">
       <nav class="nav nav-underline">
@@ -87,7 +87,7 @@
     </div>
     <form method="POST" id="myForm" action="{{url('/sendMessage')}}" onsubmit="return validateMessage()" >
     <div class="input-group mt-3 mb-3">
-    <input id="text" name="text" type="text" class="form-control" placeholder="type a message..." aria-label="Type a message..." aria-describedby="enviarMensaje">
+    <input autocomplete="off" id="text" name="text" type="text" class="form-control" placeholder="type a message..." aria-label="Type a message..." aria-describedby="enviarMensaje">
       <input id="project_id" name="project_id" type="hidden" value="{{$project[$i]->id}}">
       <input id="remitente" name="remitente" type="hidden" value="{{$project[$i]->desarrollador_id}}">
       <input id="destinatario" name="destinatario" type="hidden" value="{{$project[$i]->cliente_id}}">

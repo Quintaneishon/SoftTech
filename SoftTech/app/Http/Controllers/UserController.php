@@ -138,12 +138,14 @@ class UserController extends Controller
         $peticion = Peticion::where('desarrollador_id',$id)->where('contestado','N')->get();
         $project = Project::where('desarrollador_id',$id)->get();
         $mensajes = ProjectMessages::all();
+        $cliente=Session::get('login');
         return view('users.dashboardDesarrollador',[
             'user' => $user,
             'especialidad' => $especialidad,
             'peticion' => $peticion,
             'project' => $project,
-            'mensajes' => $mensajes
+            'mensajes' => $mensajes,
+            'cliente' => $cliente
         ]);
     }
 

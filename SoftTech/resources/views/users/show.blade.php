@@ -55,7 +55,7 @@
       <div class="modal-body">
           <h6>Nombre de tu proyecto</h6>
           <div class="form-group">
-            <input type="text" class="form-control" id="titleProyect" name="titleProyect">
+            <input type="text" class="form-control" id="titleProyect" name="titleProyect" autocomplete="off">
           </div>
           <h6>Resumen</h6>
           <div class="form-group">

@@ -30,11 +30,6 @@
       @if($message = Session::get('error'))
          <span class="badge badge-danger">{{$message}}</span>
      @endif
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
-      </div>
       <button class="btn btn-lg btn-secondary btn-block" type="submit">Sign in</button><br>
       ¿No tienes una cuenta?
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{url("/usuarios/nuevo") }}">Registrate</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
