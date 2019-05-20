@@ -41,7 +41,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{{route('dashboard',$user->id)}}">Dashboard</a>
+            <a class="nav-link" href="{{route('dashboard',$cliente)}}">Dashboard</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="{{url("/usuarios")}}">Desarrolladores</a>

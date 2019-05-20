@@ -20,11 +20,12 @@ class UserController extends Controller
         $users = User::where('tipo','desarrollador')->get();
         $tittle = 'Listado de Desarrolladores';
         $especialidades = Especialidad::all();
-
+        $cliente=Session::get('login');
         return view('users.index',[
             'users' => $users,
             'title' => $tittle,
-            'especialidades' => $especialidades
+            'especialidades' => $especialidades,
+            'cliente' => $cliente
         ]);
     }
 
@@ -33,10 +34,11 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $especialidad = Especialidad::find($user->especialidad_id);
-
+        $cliente=Session::get('login');
         return view('users.show',[
             'user' => $user,
-            'especialidad' => $especialidad
+            'especialidad' => $especialidad,
+            'cliente' => $cliente
         ]);
     }
 
@@ -151,11 +153,13 @@ class UserController extends Controller
         $peticion = Peticion::where('cliente_id',$id)->where('contestado','S')->get();
         $project = Project::where('cliente_id',$id)->get();
         $mensajes = ProjectMessages::all();
+        $cliente=Session::get('login');
         return view('users.dashboardCliente',[
             'user' => $user,
             'peticion' => $peticion,
             'project' => $project,
-            'mensajes' => $mensajes
+            'mensajes' => $mensajes,
+            'cliente' => $cliente
         ]);
     }
 
