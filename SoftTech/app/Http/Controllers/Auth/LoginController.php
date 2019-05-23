@@ -25,10 +25,11 @@ class LoginController extends Controller
         if(Auth::attempt($user_data)){
             $tipo=User::where('email',$user_data['email'])->value('tipo');
             $id=User::where('email',$user_data['email'])->value('id');
-            Session::put('login', $id);
-            if($tipo=='cliente')
+            
+            if($tipo=='cliente'){
+                Session::put('login', $id);
                 return redirect('cliente/'.$id);
-            else
+            }else
                 return redirect('desarrollador/'.$id);
         }
         else

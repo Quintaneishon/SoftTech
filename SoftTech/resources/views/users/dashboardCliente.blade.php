@@ -34,11 +34,10 @@
                 <div class="dropdown-item border">
                   @if($peticion[$i]->aceptado == 'S')
                     El desarrollador aceptó tu proyecto:<br><b>{{$peticion[$i]->name}}</b><br> comunicate con el para más detalles <br> 
-                  <a class="badge badge-success" href="#">GO</a>
-                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">OK</a>
+                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">ELIMINAR</a>
                   @else
                     El desarrollador rechazo tu proyecto:<br><b>{{$peticion[$i]->name}}</b><br>puedes intentar buscando otro desarrollador<br> 
-                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">OK</a>
+                  <a class="badge badge-danger" href="{{route('eliminar',$peticion[$i]->id)}}">ELIMINAR</a>
                   @endif
                 </div>
                 @endfor
@@ -58,14 +57,18 @@
 
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <h5 class="border-bottom border-gray pb-2 mb-0"><b>{{$project[$i]->name}}</b></h5>
+    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b></h5>
+    @if($project[$i]->avance_1 == null)
+        <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})">1</a>
+      @endif
+    </div>
     <div class="media pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
       <div class="scroll" style="width: 100%; max-height: 200px; overflow-y: scroll;display:block">
             @foreach($mensajes as $mensaje)
               @if($mensaje->project_id == $project[$i]->id)
                 @if($mensaje->remitente == $user->id)
-                <p class="badge badge-warning" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
+                <p class="badge badge-secondary" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;">{{$mensaje->mensaje}}</p>
                 @else
                 <p class="badge badge-warning" style="float:left;margin-left:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
                 @endif
@@ -87,7 +90,28 @@
     </div>
   </div>
 @endfor
-
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Elige una fecha</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('usuarios/crearAvance')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="content">
+                <input class="form-group date" type="date" name="date">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -101,11 +125,15 @@ function validateMessage() {
 }
 $( document ).ready(function() {
     var objDiv = document.getElementsByClassName("scroll");
-    console.log(objDiv.length);
     for(var i=0; i< objDiv.length; i++) {
      var trash = objDiv[i];
      trash.scrollTop = trash.scrollHeight;
-  } 
+  }
+  $('#datetimepicker1').datetimepicker();
 });
+function pedirAvance(id){
+  $("#myModal").modal('show');
+  $( "#content" ).append( " <input type='hidden' name='projectID' value='"+id+"' >" );
+}
 </script>
 @endsection

@@ -76,7 +76,7 @@
             @foreach($mensajes as $mensaje)
               @if($mensaje->project_id == $project[$i]->id)
               @if($mensaje->remitente == $user->id)
-                  <p class="badge badge-warning" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
+                  <p class="badge badge-secondary" style="float:right;margin-right:10px;clear:both;padding:10px;font-size:small;">{{$mensaje->mensaje}}</p>
                 @else
                 <p class="badge badge-warning" style="float:left;margin-left:10px;clear:both;padding:10px;font-size:small;background-color:#ECECEC;">{{$mensaje->mensaje}}</p>
                 @endif

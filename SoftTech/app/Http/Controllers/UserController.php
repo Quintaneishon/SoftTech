@@ -167,7 +167,6 @@ class UserController extends Controller
 
     public function crearTrato(Request $request){
         $cliente=Session::get('login');
-
         Peticion::create([
             'desarrollador_id' => $request['desarrolladorID'],
             'cliente_id' => $cliente,
