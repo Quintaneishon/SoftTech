@@ -9,6 +9,6 @@ class ProjectMessages extends Model
     protected $table = 'projects_messages';
 
     protected $fillable = [
-        'remitente','destinatario','mensaje','read','project_id'
+        'remitente','destinatario','mensaje','project_id'
     ];
 }

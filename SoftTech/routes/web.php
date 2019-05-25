@@ -27,3 +27,5 @@ Route::get('/cliente/{id}','UserController@dashboardCliente')->name('dashboard')
 Route::get('/usuarios/eliminar/{id}','UserController@eliminarPeticion')->name('eliminar')->middleware('auth');
 
 Route::post('/sendMessage','ProjectController@sendMessage');
+
+Route::post('/crearAvance', 'ProjectController@crearAvance');

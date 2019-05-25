@@ -21,6 +21,7 @@ class CreatePeticionesTable extends Migration
             $table->text('resumen');
             $table->char('contestado')->default('N');
             $table->char('aceptado')->default('N');
+            $table->integer('project_id')->nullable();
             $table->timestamps();
         });
     }

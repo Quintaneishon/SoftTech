@@ -180,14 +180,31 @@ class UserController extends Controller
     public function contestar($respuesta,$id){
         $peticion=Peticion::find($id);
         $peticion->contestado='S';
-
         if($respuesta=='aceptar'){
+            if($peticion->name == 'Entrega Primer Avance'){
+                $project=Project::find($peticion->project_id);
+                $fecha = explode("/",$peticion->resumen);
+                $project->avance_1=$fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+                $project->save();
+            }else if($peticion->name == 'Entrega Segundo Avance'){
+                $project=Project::find($peticion->project_id);
+                $fecha = explode("/",$peticion->resumen);
+                $project->avance_2=$fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+                $project->save();
+            }else if($peticion->name == 'Entrega Final'){
+                $project=Project::find($peticion->project_id);
+                $fecha = explode("/",$peticion->resumen);
+                $project->avance_final=$fecha[2].'-'.$fecha[1].'-'.$fecha[0];
+                $project->save();
+            }else{
+                Project::create([
+                    'desarrollador_id'=>$peticion->desarrollador_id,
+                    'cliente_id'=>$peticion->cliente_id,
+                    'name'=>$peticion->name
+                ]);
+            }
+
             $peticion->aceptado='S';
-            Project::create([
-                'desarrollador_id'=>$peticion->desarrollador_id,
-                'cliente_id'=>$peticion->cliente_id,
-                'name'=>$peticion->name
-            ]);
         }
 
         $peticion->save();

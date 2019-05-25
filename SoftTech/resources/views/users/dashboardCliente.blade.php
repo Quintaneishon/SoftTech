@@ -54,13 +54,54 @@
       <h2 class="mb-0 text-white lh-100">Bienvenido {{$user->name}}</h2>
     </div>
 </div>
-
+@if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+</div>
+@endif
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
     <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b></h5>
     @if($project[$i]->avance_1 == null)
-        <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})">1</a>
+      <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">1</a>
+    @else
+      @php
+        $fecha = explode('-',$project[$i]->avance_1);
+        $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+      @endphp
+      @if($project[$i]->entrega_1 == 'N')
+        <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>
+      @else
+        <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>   
       @endif
+      @if($project[$i]->avance_2 == null)
+        <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">2</a>
+      @else
+        @php
+          $fecha = explode('-',$project[$i]->avance_2);
+          $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+        @endphp
+        @if($project[$i]->entrega_2 == 'N')
+          <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>
+        @else
+          <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>   
+        @endif
+        @if($project[$i]->avance_final == null)
+          <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">Final</a>
+        @else
+          @php
+            $fecha = explode('-',$project[$i]->avance_final);
+            $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+          @endphp
+          @if($project[$i]->entrega_final == 'N')
+            <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
+          @else
+            <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>   
+          @endif
+        @endif
+      @endif
+    @endif
     </div>
     <div class="media pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
@@ -99,10 +140,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="{{url('usuarios/crearAvance')}}" >
+      <form method="POST" action="{{url('crearAvance')}}" >
       <div class="modal-body">
           <div class="form-group" id="content">
-                <input class="form-group date" type="date" name="date">
+                <input class="form-group date" id="datepicker" type="text" name="date" autocomplete="off">
             </div>
       </div>
       <div class="modal-footer">
@@ -129,11 +170,11 @@ $( document ).ready(function() {
      var trash = objDiv[i];
      trash.scrollTop = trash.scrollHeight;
   }
-  $('#datetimepicker1').datetimepicker();
+  $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
 });
 function pedirAvance(id){
   $("#myModal").modal('show');
-  $( "#content" ).append( " <input type='hidden' name='projectID' value='"+id+"' >" );
+  $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
 }
 </script>
 @endsection

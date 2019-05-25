@@ -42,14 +42,14 @@
             @endif
         </div>
         <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-outline-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:1500%;">
+            <button id="btnGroupDrop2" type="button" class="btn btn-outline-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-left:1300%;">
             <i class="fas fa-bars"></i>
             </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
             <a class="dropdown-item" href="/logout">Log Out</a>
             <a class="dropdown-item" href="#">Ayuda</a>
             </div>
-          </div>
+        </div>
   </nav>
 </div>
 @endsection

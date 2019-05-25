@@ -18,6 +18,12 @@ class CreateProjectsTable extends Migration
             $table->unsignedInteger('desarrollador_id');
             $table->unsignedInteger('cliente_id');
             $table->string('name');
+            $table->date('avance_1')->nullable();
+            $table->char('entrega_1')->default('N');
+            $table->date('avance_2')->nullable();
+            $table->char('entrega_2')->default('N');
+            $table->date('avance_final')->nullable();
+            $table->char('entrega_final')->default('N');
             $table->timestamps();
         });
     }
