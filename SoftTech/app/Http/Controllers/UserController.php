@@ -211,6 +211,26 @@ class UserController extends Controller
         return back();
     }
 
+    public function crearEvidencia(Request $request){
+        $nombreReal = null;
+        if ($request->file('uploadfile') != null) {
+            $nombreReal = $request->uploadfile->getClientOriginalName();
+            $request->uploadfile->storeAs('evidencias',$nombreReal,"public");
+        }
+        $project = Project::findOrFail($request['project_id']);
+        if($project->entrega_1 == null)
+            $project->entrega_1 = $nombreReal;
+        else if($project->entrega_2 == null)
+            $project->entrega_2 = $nombreReal;
+        else
+            $project->entrega_final = $nombreReal;
+
+        $project->save();
+    
+        return back();
+        // return $cliente.' '.$request['desarrolladorID'];
+    }
+
     public function eliminarPeticion($id){
         $peticion=Peticion::find($id);
         $peticion->delete();

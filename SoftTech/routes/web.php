@@ -29,3 +29,5 @@ Route::get('/usuarios/eliminar/{id}','UserController@eliminarPeticion')->name('e
 Route::post('/sendMessage','ProjectController@sendMessage');
 
 Route::post('/crearAvance', 'ProjectController@crearAvance');
+
+Route::post('/crearEvidencia', 'UserController@crearEvidencia');

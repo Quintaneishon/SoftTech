@@ -5,6 +5,7 @@ use App\Project;
 use App\ProjectMessages;
 use App\Peticion;
 use Illuminate\Http\Request;
+use Storage;
 
 class ProjectController extends Controller
 {
@@ -38,4 +39,5 @@ class ProjectController extends Controller
         return back()->with('success','Fecha enviada correctamente!');
         // return $cliente.' '.$request['desarrolladorID'];
     }
+
 }

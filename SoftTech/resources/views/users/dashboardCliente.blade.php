@@ -70,10 +70,10 @@
         $fecha = explode('-',$project[$i]->avance_1);
         $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
       @endphp
-      @if($project[$i]->entrega_1 == 'N')
+      @if($project[$i]->entrega_1 == null)
         <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>
       @else
-        <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>   
+        <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" href="#" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_1}}','1')">1</a>   
       @endif
       @if($project[$i]->avance_2 == null)
         <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">2</a>
@@ -82,10 +82,10 @@
           $fecha = explode('-',$project[$i]->avance_2);
           $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
         @endphp
-        @if($project[$i]->entrega_2 == 'N')
+        @if($project[$i]->entrega_2 == null)
           <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>
         @else
-          <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>   
+          <a class="fas fa-angle-double-right btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_2}}','2')">2</a>   
         @endif
         @if($project[$i]->avance_final == null)
           <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">Final</a>
@@ -94,10 +94,10 @@
             $fecha = explode('-',$project[$i]->avance_final);
             $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
           @endphp
-          @if($project[$i]->entrega_final == 'N')
+          @if($project[$i]->entrega_final == null)
             <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
           @else
-            <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>   
+            <a class="fas fa-angle-double-right btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_final}}','Final')">Final</a>   
           @endif
         @endif
       @endif
@@ -140,7 +140,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="{{url('crearAvance')}}" >
+      <form method="POST" action="{{url('/crearAvance')}}" >
       <div class="modal-body">
           <div class="form-group" id="content">
                 <input class="form-group date" id="datepicker" type="text" name="date" autocomplete="off">
@@ -148,6 +148,22 @@
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myEvidence">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b><span id="title"></span></b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="pdf"></div>
       </div>
       </form>
     </div>
@@ -175,6 +191,11 @@ $( document ).ready(function() {
 function pedirAvance(id){
   $("#myModal").modal('show');
   $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
+}
+function verAvance(titulo,numero){
+  $("#myEvidence").modal('show');
+  $( "#title" ).text("Evidencia "+numero);
+  $("#pdf").html("<embed src='http://localhost:8000/storage/evidencias/"+titulo+"' width='470' height='375'>");
 }
 </script>
 @endsection

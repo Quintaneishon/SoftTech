@@ -69,7 +69,41 @@
 
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <h5 class="border-bottom border-gray pb-2 mb-0"><b>{{$project[$i]->name}}</b></h5>
+    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b></h5>
+      @if($project[$i]->avance_1 != null)
+        @if($project[$i]->entrega_1 == null)
+        @php
+        $fecha = explode('-',$project[$i]->avance_1);
+        $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+        @endphp
+          <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>
+        @else
+          <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">1</a>
+        @endif
+        @if($project[$i]->avance_2 != null)
+          @if($project[$i]->entrega_2 == null)
+          @php
+          $fecha = explode('-',$project[$i]->avance_1);
+          $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+          @endphp
+            <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>
+          @else
+            <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">2</a>
+          @endif
+          @if($project[$i]->avance_final != null)
+          @php
+          $fecha = explode('-',$project[$i]->avance_1);
+          $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
+          @endphp
+            @if($project[$i]->entrega_final == null)
+              <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
+            @else
+              <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">Final</a>
+            @endif
+          @endif
+        @endif
+      @endif
+    </div>
     <div class="media text-muted pt-3">
       <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
       <div class="scroll" style="width: 100%; max-height: 200px; overflow-y: scroll;" onload="scrollToBottom()">
@@ -97,6 +131,28 @@
     </form>
     </div>
   </div>
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Sube tu evidencia</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/crearEvidencia')}}" enctype="multipart/form-data">
+      <div class="modal-body">
+          <div class="form-group" id="content">
+            <input name="uploadfile" class="form-control-file" type="file">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endfor
 
 @endsection
@@ -118,5 +174,9 @@ $( document ).ready(function() {
      trash.scrollTop = trash.scrollHeight;
   } 
 });
+function subirAvance(id){
+  $("#myModal").modal('show');
+  $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
+}
 </script>
 @endsection
