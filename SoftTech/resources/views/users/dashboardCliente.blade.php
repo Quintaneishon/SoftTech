@@ -24,6 +24,9 @@
             @if(sizeof($peticion)==0)
             <i class="fa fa-bell" id="bell"></i>
             @else
+            <script type="text/javascript">
+                notificacion({{sizeof($peticion)}});
+            </script>
             <i class="fa fa-bell faa-ring animated" id="bell"></i>
             @endif
             <span class="badge badge-pill bg-light align-text-bottom">{{sizeof($peticion)}}</span>
@@ -55,49 +58,48 @@
     </div>
 </div>
 @if ($message = Session::get('success'))
-<div class="alert alert-success alert-block">
-	<button type="button" class="close" data-dismiss="alert">×</button>	
-        <strong>{{ $message }}</strong>
-</div>
+  <script>
+    toastr.success('{{$message}}');
+  </script>
 @endif
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b></h5>
+    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b><a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->cliente_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a></h5>
     @if($project[$i]->avance_1 == null)
-      <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">1</a>
+      <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha"><i class="fas fa-angle-double-right"></i> 1</a>
     @else
       @php
         $fecha = explode('-',$project[$i]->avance_1);
         $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
       @endphp
       @if($project[$i]->entrega_1 == null)
-        <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>
+        <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-angle-double-right"></i> 1</a>
       @else
-        <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" href="#" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_1}}','1')">1</a>   
+        <a class="btn btn-success" data-toggle="tooltip" href="#" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_1}}','1')"><i class="fas fa-angle-double-right"></i> 1</a>   
       @endif
       @if($project[$i]->avance_2 == null)
-        <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">2</a>
+        <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha"><i class="fas fa-angle-double-right"></i> 2</a>
       @else
         @php
           $fecha = explode('-',$project[$i]->avance_2);
           $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
         @endphp
         @if($project[$i]->entrega_2 == null)
-          <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>
+          <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-angle-double-right"></i> 2</a>
         @else
-          <a class="fas fa-angle-double-right btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_2}}','2')">2</a>   
+          <a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_2}}','2')"><i class="fas fa-angle-double-right"></i> 2</a>   
         @endif
         @if($project[$i]->avance_final == null)
-          <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">Final</a>
+          <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">Final</a>
         @else
           @php
             $fecha = explode('-',$project[$i]->avance_final);
             $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
           @endphp
           @if($project[$i]->entrega_final == null)
-            <a class="fas fa-angle-double-right btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
+            <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
           @else
-            <a class="fas fa-angle-double-right btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_final}}','Final')">Final</a>   
+            <a class=" btn btn-success" href="{{asset('storage/evidencias/'.$project[$i]->entrega_final)}}" download data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" >Final <i class="fas fa-download"></i></a>   
           @endif
         @endif
       @endif
@@ -169,9 +171,34 @@
     </div>
   </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myReport">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Reportar Desarrollador</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/crearReporte')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="contentReport">
+          <textarea name="reporte" class="form-control" rows="5" cols="30" placeholder="Cuentanos que paso"></textarea>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
 function validateMessage() {
   var x = document.forms["myForm"]["text"].value;
@@ -196,6 +223,13 @@ function verAvance(titulo,numero){
   $("#myEvidence").modal('show');
   $( "#title" ).text("Evidencia "+numero);
   $("#pdf").html("<embed src='http://localhost:8000/storage/evidencias/"+titulo+"' width='470' height='375'>");
+}
+function subirReporte(id,reporto){
+  $("#myReport").modal('show');
+  $( "#contentReport" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='reporto' value='"+reporto+"' >" );
+}
+function notificacion(n){
+  toastr.info('Tiene '+n+' notificaciones nuevas');
 }
 </script>
 @endsection

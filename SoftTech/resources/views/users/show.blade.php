@@ -7,10 +7,9 @@
 <div  style="display: flex;justify-content: center; align-items: center">
 <div class="card mb-3" style="max-width: 640px;">
 @if ($message = Session::get('success'))
-<div class="alert alert-success alert-block">
-	<button type="button" class="close" data-dismiss="alert">×</button>	
-        <strong>{{ $message }}</strong>
-</div>
+  <script>
+    toastr.success('{{$message}}');
+  </script>
 @endif
         <div class="row no-gutters">
           <div class="col-md-4">

@@ -24,6 +24,9 @@
             @if(sizeof($peticion)==0)
             <i class="fa fa-bell" id="bell"></i>
             @else
+            <script type="text/javascript">
+                notificacion({{sizeof($peticion)}});
+            </script>
             <i class="fa fa-bell faa-ring animated" id="bell"></i>
             @endif
             <span class="badge badge-pill bg-light align-text-bottom">{{sizeof($peticion)}}</span>
@@ -66,19 +69,23 @@
       <small>{{$especialidad->title}}</small>
     </div>
 </div>
-
+@if ($message = Session::get('success'))
+  <script>
+    toastr.success('{{$message}}');
+  </script>
+@endif
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b></h5>
+    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b><a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a></h5>
       @if($project[$i]->avance_1 != null)
         @if($project[$i]->entrega_1 == null)
         @php
         $fecha = explode('-',$project[$i]->avance_1);
         $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
         @endphp
-          <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">1</a>
+          <a class="btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}},'')"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-upload"></i> 1</a>
         @else
-          <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">1</a>
+          <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada"><i class="fas fa-check"></i> 1</a>
         @endif
         @if($project[$i]->avance_2 != null)
           @if($project[$i]->entrega_2 == null)
@@ -86,9 +93,9 @@
           $fecha = explode('-',$project[$i]->avance_1);
           $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
           @endphp
-            <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">2</a>
+            <a class="btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}},'')"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-upload"></i> 2</a>
           @else
-            <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">2</a>
+            <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada"><i class="fas fa-check"></i> 2</a>
           @endif
           @if($project[$i]->avance_final != null)
           @php
@@ -96,9 +103,9 @@
           $fechita=$fecha[2].'/'.$fecha[1].'/'.$fecha[0];
           @endphp
             @if($project[$i]->entrega_final == null)
-              <a class="fas fa-angle-double-right btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}">Final</a>
+              <a class="btn btn-danger" href="#" onclick="javascript:subirAvance({{$project[$i]->id}},'f')"  data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-upload"></i> Final</a>
             @else
-              <a class="fas fa-angle-double-right btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada">Final</a>
+              <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada"><i class="fas fa-check"></i> Final</a>
             @endif
           @endif
         @endif
@@ -140,10 +147,32 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="{{url('/crearEvidencia')}}" enctype="multipart/form-data">
+      <form method="POST" action="{{url('/crearEvidencia')}}" enctype="multipart/form-data" onsubmit="return validateEvidencia()">
       <div class="modal-body">
           <div class="form-group" id="content">
-            <input name="uploadfile" class="form-control-file" type="file">
+            <input name="uploadfile" class="form-control-file" type="file" id="file">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myReport">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Reportar Desarrollador</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/crearReporte')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="contentReport">
+          <textarea name="reporte" class="form-control" rows="5" cols="30" placeholder="Cuentanos que paso"></textarea>
           </div>
       </div>
       <div class="modal-footer">
@@ -166,6 +195,26 @@ function validateMessage() {
     return false;
   }
 }
+function validateEvidencia() {
+  var x = $('#file').val();
+  var array = x.split(".");
+  var tipo = $('#tipo').val();
+  if (x == "") {
+    alert("Debes subir algo");
+    return false;
+  }
+  if(tipo=='f'){
+    if(array[1] != "zip" && array[1] != "rar"){
+      alert("El archivo final tiene que ser extension zip o rar");
+      return false;
+    }
+  }else{
+    if(array[1] != "pdf" ){
+      alert("El archivo debe ser pdf");
+      return false;
+    }
+  }
+}
 $( document ).ready(function() {
     var objDiv = document.getElementsByClassName("scroll");
     console.log(objDiv.length);
@@ -174,9 +223,16 @@ $( document ).ready(function() {
      trash.scrollTop = trash.scrollHeight;
   } 
 });
-function subirAvance(id){
+function subirAvance(id,final){
   $("#myModal").modal('show');
-  $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
+  $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' id='tipo' value='"+final+"' >" );
+}
+function subirReporte(id,reporto){
+  $("#myReport").modal('show');
+  $( "#contentReport" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='reporto' value='"+reporto+"' >" );
+}
+function notificacion(n){
+  toastr.info('Tiene '+n+' notificaciones nuevas');
 }
 </script>
 @endsection

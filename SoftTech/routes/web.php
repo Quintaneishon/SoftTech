@@ -30,4 +30,6 @@ Route::post('/sendMessage','ProjectController@sendMessage');
 
 Route::post('/crearAvance', 'ProjectController@crearAvance');
 
+Route::post('/crearReporte', 'ProjectController@crearReporte');
+
 Route::post('/crearEvidencia', 'UserController@crearEvidencia');

@@ -227,7 +227,7 @@ class UserController extends Controller
 
         $project->save();
     
-        return back();
+        return back()->with('success','Archivo subido correctamente!');
         // return $cliente.' '.$request['desarrolladorID'];
     }
 

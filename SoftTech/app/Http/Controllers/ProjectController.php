@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Project;
 use App\ProjectMessages;
 use App\Peticion;
+use App\Reporte;
 use Illuminate\Http\Request;
 use Storage;
 
@@ -40,4 +41,16 @@ class ProjectController extends Controller
         // return $cliente.' '.$request['desarrolladorID'];
     }
 
+    public function crearReporte(Request $request){
+        $project = Project::findOrFail($request['project_id']);
+        Reporte::create([
+            'desarrollador_id' => $project->desarrollador_id,
+            'cliente_id' => $project->cliente_id,
+            'reporte' => $request['reporte'],
+            'reporto' => $request['reporto'],
+            'project_id' => $project->id
+        ]);
+        return back()->with('success','Reporte enviado correctamente!');
+        // return $cliente.' '.$request['desarrolladorID'];
+    }
 }
