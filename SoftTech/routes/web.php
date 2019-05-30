@@ -32,4 +32,8 @@ Route::post('/crearAvance', 'ProjectController@crearAvance');
 
 Route::post('/crearReporte', 'ProjectController@crearReporte');
 
+Route::post('/crearCosto', 'ProjectController@crearCosto');
+
+Route::post('/borrarProyecto', 'ProjectController@borrarProyecto');
+
 Route::post('/crearEvidencia', 'UserController@crearEvidencia');

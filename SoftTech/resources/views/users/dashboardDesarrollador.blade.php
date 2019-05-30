@@ -76,7 +76,15 @@
 @endif
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b><a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a></h5>
+    <div class="border-bottom border-gray pb-2 mb-0">
+    <h5><b>{{$project[$i]->name}}</b>
+    @if($project[$i]->costo != null)
+      <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}}" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 0%;"><i class="fas fa-exclamation-triangle"></i></a>
+    @else
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a>
+    @endif
+    </h5>
       @if($project[$i]->avance_1 != null)
         @if($project[$i]->entrega_1 == null)
         @php

@@ -153,7 +153,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $peticion = Peticion::where('cliente_id',$id)->where('contestado','S')->get();
-        $project = Project::where('cliente_id',$id)->get();
+        $project = Project::where('cliente_id',$id)->where('cliente_borrar','N')->get();
         $mensajes = ProjectMessages::all();
         $cliente=Session::get('login');
         return view('users.dashboardCliente',[
@@ -196,7 +196,12 @@ class UserController extends Controller
                 $fecha = explode("/",$peticion->resumen);
                 $project->avance_final=$fecha[2].'-'.$fecha[1].'-'.$fecha[0];
                 $project->save();
-            }else{
+            }else if(substr( $peticion->name, 0, 5 ) === "Costo"){
+                $project=Project::find($peticion->project_id);
+                $project->costo=(double)$peticion->resumen;
+                $project->save();
+            }    
+            else{
                 Project::create([
                     'desarrollador_id'=>$peticion->desarrollador_id,
                     'cliente_id'=>$peticion->cliente_id,

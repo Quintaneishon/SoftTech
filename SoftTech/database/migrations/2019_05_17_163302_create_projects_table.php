@@ -24,6 +24,9 @@ class CreateProjectsTable extends Migration
             $table->string('entrega_2')->nullable();
             $table->date('avance_final')->nullable();
             $table->string('entrega_final')->nullable();
+            $table->double('costo')->nullable();
+            $table->char('cliente_borrar')->default('N');
+            $table->char('desarrollador_borrar')->default('N');
             $table->timestamps();
         });
     }

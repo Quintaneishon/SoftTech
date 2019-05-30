@@ -16,6 +16,7 @@
                       @else
                         <li class="list-group-item"><p class="card-text"><strong>Especialidad: </strong>{{$especialidades->find($user->especialidad_id)->title}}</p></li>
                       @endif
+                        <li class="list-group-item"><p class="card-text"><strong>Proyectos: </strong>{{$user->proyectos}}</p></li>
                         <li class="list-group-item"><p class="card-text"><strong>Calificación: </strong>{{$user->calificacion}} <span class="fa fa-star checked"></span></p></li>
                       </ul>
                       <div class="card-body">

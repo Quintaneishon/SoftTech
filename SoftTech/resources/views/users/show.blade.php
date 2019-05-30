@@ -33,6 +33,7 @@
                     @else
                     <p class="card-text"><strong>Descripcion: </strong>{{$user->descripcion}}</p>
                     @endif
+                    <p class="card-text"><strong>Proyectos: </strong>{{$user->proyectos}}</p>
                 <p class="card-text"><strong>Calificacion: </strong>{{$user->calificacion}} <span class="fa fa-star checked"></span></p>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Proponer Trato</a>
             </div>

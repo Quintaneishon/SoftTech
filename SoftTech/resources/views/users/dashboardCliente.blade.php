@@ -64,7 +64,18 @@
 @endif
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
-    <div class="border-bottom border-gray pb-2 mb-0"><h5><b>{{$project[$i]->name}}</b><a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->cliente_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a></h5>
+    <div class="border-bottom border-gray pb-2 mb-0">
+      @if($project[$i]->entrega_final != null)
+          <a class="btn btn-danger" href="#" onclick="javascript:finalizarProyecto({{$project[$i]->id}})"><i class="fas fa-radiation"></i><b> FINALIZAR PROYECTO</b></a>
+      @endif
+      <h5><b>{{$project[$i]->name}}</b>
+      @if($project[$i]->costo == null)
+        <a class="btn btn-success" href="#" onclick="javascript:subirPrecio({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Proponer Costo" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
+      @else
+        <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}}" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
+      @endif
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->cliente_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 0%;"><i class="fas fa-exclamation-triangle"></i></a>
+      </h5>
     @if($project[$i]->avance_1 == null)
       <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha"><i class="fas fa-angle-double-right"></i> 1</a>
     @else
@@ -134,7 +145,7 @@
   </div>
 @endfor
 <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><b>Elige una fecha</b></h5>
@@ -145,7 +156,29 @@
       <form method="POST" action="{{url('/crearAvance')}}" >
       <div class="modal-body">
           <div class="form-group" id="content">
-                <input class="form-group date" id="datepicker" type="text" name="date" autocomplete="off">
+                <input class="form-group date form-control" id="datepicker" type="text" name="date" autocomplete="off">
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myMoney">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Escribe la cantidad</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/crearCosto')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="contentMoney">
+                <input class="form-group form-control" id="money" type="text" name="money" autocomplete="off" placeholder="$ MXN">
             </div>
       </div>
       <div class="modal-footer">
@@ -193,12 +226,32 @@
     </div>
   </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myFinalizar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Califica el desempeño del desarrollador</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/borrarProyecto')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="contentBorrar">
+            <input class="form-control" name="numero" type="number" value="5" id="numero" min="0" max="5">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Seguir revisando</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
-<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script>
 function validateMessage() {
   var x = document.forms["myForm"]["text"].value;
@@ -215,6 +268,12 @@ $( document ).ready(function() {
   }
   $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
 });
+function finalizarProyecto(id,nombre){
+  $("#desarrollador").text(nombre);
+  $("#myFinalizar").modal('show');
+  $( "#contentBorrar" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='quien' value='cliente' >" );
+}
+
 function pedirAvance(id){
   $("#myModal").modal('show');
   $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
@@ -227,6 +286,10 @@ function verAvance(titulo,numero){
 function subirReporte(id,reporto){
   $("#myReport").modal('show');
   $( "#contentReport" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='reporto' value='"+reporto+"' >" );
+}
+function subirPrecio(id){
+  $("#myMoney").modal('show');
+  $( "#contentMoney" ).append( " <input type='hidden' name='project_id' value='"+id+"' >" );
 }
 function notificacion(n){
   toastr.info('Tiene '+n+' notificaciones nuevas');
