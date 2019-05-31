@@ -136,7 +136,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $especialidad = Especialidad::find($user->especialidad_id);
         $peticion = Peticion::where('desarrollador_id',$id)->where('contestado','N')->get();
-        $project = Project::where('desarrollador_id',$id)->get();
+        $project = Project::where('desarrollador_id',$id)->where('desarrollador_borrar','N')->get();
         $mensajes = ProjectMessages::all();
         $cliente=Session::get('login');
         return view('users.dashboardDesarrollador',[

@@ -50,8 +50,39 @@
   </nav>
 </div>
 @endsection
+@section('links')
+@parent
+<style>
+        .star{
+          color: goldenrod;
+          font-size: 2.0rem;
+          padding: 0 1rem; /* space out the stars */
+        }
+        .star::before{
+          content: '\2606';    /* star outline */
+          cursor: pointer;
+        }
+        .star.rated::before{
+          /* the style for a selected star */
+          content: '\2605';  /* filled star */
+        }
+        
+        .stars{
+            counter-reset: rateme 0;   
+            font-size: 2.0rem;
+            font-weight: 900;
+        }
+        .star.rated{
+            counter-increment: rateme 1;
+        }
+        .stars::after{
+            content: counter(rateme) '/5';
+        }
+    </style>
+@endsection
 
 @section('content')
+<!-- <img src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_13.png" alt="PayPal Credit" /> -->
 <div class="d-flex align-items-center p-3 my-0 text-white-50 bg-info rounded shadow-sm">
     <div class="lh-100">
       <h2 class="mb-0 text-white lh-100">Bienvenido {{$user->name}}</h2>
@@ -66,15 +97,25 @@
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
     <div class="border-bottom border-gray pb-2 mb-0">
       @if($project[$i]->entrega_final != null)
-          <a class="btn btn-danger" href="#" onclick="javascript:finalizarProyecto({{$project[$i]->id}})"><i class="fas fa-radiation"></i><b> FINALIZAR PROYECTO</b></a>
+          <a class="btn btn-danger" href="#" onclick="javascript:finalizarProyecto({{$project[$i]->id}})"><i class="fas fa-radiation"></i><b> FINALIZAR PROYECTO</b></a><br><br>
       @endif
       <h5><b>{{$project[$i]->name}}</b>
       @if($project[$i]->costo == null)
-        <a class="btn btn-success" href="#" onclick="javascript:subirPrecio({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Proponer Costo" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
+        <a class="btn btn-success" href="#" onclick="javascript:subirPrecio({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Proponer Costo" style="position:absolute;right: 11%;"><i class="fas fa-money-bill-alt"></i></a>
       @else
-        <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}}" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="
+    width: 100px;
+    position:absolute;
+    right: 21%;
+    top: 47.5%;">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+      <input type="image" src="https://www.paypalobjects.com/webstatic/es_MX/mktg/logos-buttons/redesign/btn_13.png" border="0" name="submit" alt="PayPal, la forma más segura y rápida de pagar en línea.">
+      <img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+      </form>
+        <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}}" style="position:absolute;right: 11%;"><i class="fas fa-money-bill-alt"></i></a>
       @endif
-      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->cliente_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 0%;"><i class="fas fa-exclamation-triangle"></i></a>
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->cliente_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="position:absolute;right: 7%;"><i class="fas fa-exclamation-triangle"></i></a>
       </h5>
     @if($project[$i]->avance_1 == null)
       <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha"><i class="fas fa-angle-double-right"></i> 1</a>
@@ -86,7 +127,7 @@
       @if($project[$i]->entrega_1 == null)
         <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-angle-double-right"></i> 1</a>
       @else
-        <a class="btn btn-success" data-toggle="tooltip" href="#" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_1}}','1')"><i class="fas fa-angle-double-right"></i> 1</a>   
+        <a class="btn btn-success" data-toggle="tooltip" href="#" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_1}}','1')"><i class="fas fa-eye"></i> 1</a>   
       @endif
       @if($project[$i]->avance_2 == null)
         <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha"><i class="fas fa-angle-double-right"></i> 2</a>
@@ -98,7 +139,7 @@
         @if($project[$i]->entrega_2 == null)
           <a class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Fecha: {{$fechita}}"><i class="fas fa-angle-double-right"></i> 2</a>
         @else
-          <a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_2}}','2')"><i class="fas fa-angle-double-right"></i> 2</a>   
+          <a class="btn btn-success" href="#" data-toggle="tooltip" data-placement="top" title="Evidencia Entregada" onclick="javascript:verAvance('{{$project[$i]->entrega_2}}','2')"><i class="fas fa-eye"></i> 2</a>   
         @endif
         @if($project[$i]->avance_final == null)
           <a class="btn btn-danger" href="#" onclick="javascript:pedirAvance({{$project[$i]->id}})"  data-toggle="tooltip" data-placement="top" title="Sin fecha">Final</a>
@@ -238,7 +279,14 @@
       <form method="POST" action="{{url('/borrarProyecto')}}" >
       <div class="modal-body">
           <div class="form-group" id="contentBorrar">
-            <input class="form-control" name="numero" type="number" value="5" id="numero" min="0" max="5">
+            <input class="form-control" name="numero" type="hidden" value="" id="numero" min="0">
+            <div class="stars" data-rating="3">
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+          </div>
           </div>
       </div>
       <div class="modal-footer">
@@ -268,8 +316,7 @@ $( document ).ready(function() {
   }
   $('#datepicker').datepicker({ dateFormat: 'dd/mm/yy' });
 });
-function finalizarProyecto(id,nombre){
-  $("#desarrollador").text(nombre);
+function finalizarProyecto(id){
   $("#myFinalizar").modal('show');
   $( "#contentBorrar" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='quien' value='cliente' >" );
 }
@@ -294,5 +341,35 @@ function subirPrecio(id){
 function notificacion(n){
   toastr.info('Tiene '+n+' notificaciones nuevas');
 }
+document.addEventListener('DOMContentLoaded', function(){
+            let stars = document.querySelectorAll('.star');
+            stars.forEach(function(star){
+                star.addEventListener('click', setRating); 
+            });
+            
+            let rating = parseInt(document.querySelector('.stars').getAttribute('data-rating'));
+            let target = stars[rating - 1];
+            target.dispatchEvent(new MouseEvent('click'));
+        });
+        function setRating(ev){
+            let span = ev.currentTarget;
+            let stars = document.querySelectorAll('.star');
+            let match = false;
+            let num = 0;
+            stars.forEach(function(star, index){
+                if(match){
+                    star.classList.remove('rated');
+                }else{
+                    star.classList.add('rated');
+                }
+                //are we currently looking at the span that was clicked
+                if(star === span){
+                    match = true;
+                    num = index + 1;
+                }
+            });
+            document.querySelector('.stars').setAttribute('data-rating', num);
+            $('#numero').val(num);
+        }
 </script>
 @endsection

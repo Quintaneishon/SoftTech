@@ -79,11 +79,11 @@ class ProjectController extends Controller
             $desarrollador->save();
         }else{
             $project->desarrollador_borrar='S';
-            $cliente = User::findOrFail($project->cliente_id);
-            $numero=$cliente->proyectos;
+            $desarrollador = User::findOrFail($project->desarrollador_id);
+            $numero=$desarrollador->proyectos;
             $numero++;
-            $cliente->proyectos=$numero;
-            $cliente->save();
+            $desarrollador->proyectos=$numero;
+            $desarrollador->save();
         }
 
         $project->save();

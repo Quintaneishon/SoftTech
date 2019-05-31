@@ -57,6 +57,37 @@
 </div>
 @endsection
 
+@section('links')
+@parent
+<style>
+        .star{
+          color: goldenrod;
+          font-size: 2.0rem;
+          padding: 0 1rem; /* space out the stars */
+        }
+        .star::before{
+          content: '\2606';    /* star outline */
+          cursor: pointer;
+        }
+        .star.rated::before{
+          /* the style for a selected star */
+          content: '\2605';  /* filled star */
+        }
+        
+        .stars{
+            counter-reset: rateme 0;   
+            font-size: 2.0rem;
+            font-weight: 900;
+        }
+        .star.rated{
+            counter-increment: rateme 1;
+        }
+        .stars::after{
+            content: counter(rateme) '/5';
+        }
+    </style>
+@endsection
+
 @section('content')
 <div class="d-flex align-items-center p-3 my-0 text-white-50 bg-info rounded shadow-sm">
     @if ($user->foto != null)
@@ -77,12 +108,15 @@
 @for($i=sizeof($project)-1;$i>=0;$i--)
 <div class="my-5 p-3 bg-white rounded shadow-sm" id="{{'project'.$i}}">
     <div class="border-bottom border-gray pb-2 mb-0">
+    @if($project[$i]->entrega_final != null)
+          <a class="btn btn-danger" href="#" onclick="javascript:finalizarProyecto({{$project[$i]->id}})"><i class="fas fa-radiation"></i><b> FINALIZAR PROYECTO</b></a><br><br>
+    @endif
     <h5><b>{{$project[$i]->name}}</b>
     @if($project[$i]->costo != null)
-      <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}}" style="margin-left: 82%;"><i class="fas fa-money-bill-alt"></i></a>
-      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 0%;"><i class="fas fa-exclamation-triangle"></i></a>
+      <a class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{'Costo: $'.$project[$i]->costo}} - Sin deposito" style="position:absolute;right: 11%;"><i class="fas fa-money-bill-alt"></i></a>
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="position:absolute;right: 7%;"><i class="fas fa-exclamation-triangle"></i></a>
     @else
-      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="margin-left: 88%;"><i class="fas fa-exclamation-triangle"></i></a>
+      <a class="btn btn-warning" href="#" onclick="javascript:subirReporte({{$project[$i]->id}},{{$project[$i]->desarrollador_id}})"  data-toggle="tooltip" data-placement="top" title="Reportar" style="position:absolute;right: 7%;"><i class="fas fa-exclamation-triangle"></i></a>
     @endif
     </h5>
       @if($project[$i]->avance_1 != null)
@@ -190,6 +224,36 @@
     </div>
   </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="myFinalizar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Califica el desempeño del cliente</b></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="{{url('/borrarProyecto')}}" >
+      <div class="modal-body">
+          <div class="form-group" id="contentBorrar">
+            <input class="form-control" name="numero" type="hidden" value="" id="numero" min="0">
+            <div class="stars" data-rating="3">
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+              <span class="star">&nbsp;</span>
+          </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Seguir revisando</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endfor
 
 @endsection
@@ -231,6 +295,10 @@ $( document ).ready(function() {
      trash.scrollTop = trash.scrollHeight;
   } 
 });
+function finalizarProyecto(id){
+  $("#myFinalizar").modal('show');
+  $( "#contentBorrar" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' name='quien' value='desarrollador' >" );
+}
 function subirAvance(id,final){
   $("#myModal").modal('show');
   $( "#content" ).append( " <input type='hidden' name='project_id' value='"+id+"' ><input type='hidden' id='tipo' value='"+final+"' >" );
@@ -242,5 +310,35 @@ function subirReporte(id,reporto){
 function notificacion(n){
   toastr.info('Tiene '+n+' notificaciones nuevas');
 }
+document.addEventListener('DOMContentLoaded', function(){
+            let stars = document.querySelectorAll('.star');
+            stars.forEach(function(star){
+                star.addEventListener('click', setRating); 
+            });
+            
+            let rating = parseInt(document.querySelector('.stars').getAttribute('data-rating'));
+            let target = stars[rating - 1];
+            target.dispatchEvent(new MouseEvent('click'));
+        });
+        function setRating(ev){
+            let span = ev.currentTarget;
+            let stars = document.querySelectorAll('.star');
+            let match = false;
+            let num = 0;
+            stars.forEach(function(star, index){
+                if(match){
+                    star.classList.remove('rated');
+                }else{
+                    star.classList.add('rated');
+                }
+                //are we currently looking at the span that was clicked
+                if(star === span){
+                    match = true;
+                    num = index + 1;
+                }
+            });
+            document.querySelector('.stars').setAttribute('data-rating', num);
+            $('#numero').val(num);
+        }
 </script>
 @endsection
