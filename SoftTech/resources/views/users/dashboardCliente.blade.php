@@ -230,7 +230,7 @@
   </div>
 </div>
 <div class="modal fade" tabindex="-1" role="dialog" id="myEvidence">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title"><b><span id="title"></span></b></h5>
@@ -328,7 +328,7 @@ function pedirAvance(id){
 function verAvance(titulo,numero){
   $("#myEvidence").modal('show');
   $( "#title" ).text("Evidencia "+numero);
-  $("#pdf").html("<embed src='http://localhost:8000/storage/evidencias/"+titulo+"' width='470' height='375'>");
+  $("#pdf").html("<embed src='http://localhost:8000/storage/evidencias/"+titulo+"' width='770' height='400'>");
 }
 function subirReporte(id,reporto){
   $("#myReport").modal('show');
